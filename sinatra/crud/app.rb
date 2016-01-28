@@ -11,7 +11,7 @@ require 'data_mapper'
 require_relative 'bookmark'
 require 'dm-serializer'
 
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/bookmarks.db")
+DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/bookmarks.db")
 DataMapper.finalize.auto_upgrade!
 
 get '/bookmarks/:id' do
@@ -21,15 +21,15 @@ get '/bookmarks/:id' do
   bookmark.to_json
 end
 
-put "/bookmarks/:id" do
+put '/bookmarks/:id' do
   id = params[:id]
   bookmark = Bookmark.get(id)
-  input = params.slice "url", "title"
+  input = params.slice('url', 'title')
   bookmark.update input
   204 # No Content
 end
 
-delete "/bookmarks/:id" do
+delete '/bookmarks/:id' do
   id = params[:id]
   bookmark = Bookmark.get(id)
   bookmark.destroy
@@ -44,7 +44,7 @@ get '/bookmarks' do
 end
 
 post '/bookmarks' do
-  input = params.slice 'url', 'title'
+  input = params.slice('url', 'title')
   bookmark = Bookmark.create input
   # Created
   [201, "/bookmarks/#{bookmark['id']}"]
@@ -52,6 +52,6 @@ end
 
 class Hash
   def slice(*whitelist)
-    whitelist.inject({}) {|result, key| result.merge(key => self[key])}
+    whitelist.inject({}) { |result, key| result.merge(key => self[key]) }
   end
 end
