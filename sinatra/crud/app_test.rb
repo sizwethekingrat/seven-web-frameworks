@@ -56,7 +56,7 @@ describe 'Bookmarking App' do
   it 'deletes a bookmark' do
     post('/bookmarks', url: 'http://www.test.com', title: 'Test')
     get '/bookmarks'
-    puts last_response.body
+    # puts last_response.body
     bookmarks = JSON.parse(last_response.body)
     last_size = bookmarks.size
 
